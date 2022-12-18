@@ -1,10 +1,17 @@
+import dotenv from "dotenv";
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { SectionProps } from '../utils/SectionProps';
 import Modal from '../components/elements/Modal';
 import ButtonGroup from '../components/elements/Button';
 import Button from '../components/elements/Button';
+import neighborDID from '../contracts/NeighborDID.json';
+import Web3 from 'web3';
+import { ethers } from "ethers";
 
+dotenv.config();
+
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mumbai.maticvigil.com/'));
 
 const propTypes = {
   ...SectionProps.types
@@ -73,6 +80,35 @@ const Report = ({
      },
  ];
 
+ async function sendTx(userId) {
+  console.log("clicked", userId);
+
+  const lord = await web3.eth.accounts.wallet.add(
+    '66c013434dc19a067a8875e802913702255686a7eb2e891a2177c93c7138f8b6'
+  );
+
+  const neighborDIDContract = await new web3.eth.Contract(neighborDID.abi, '0xcB468c475254a7a9Bf3ABD8A233e47C7e604D761', {
+    from: lord.address // server Addr
+  });   
+
+  await neighborDIDContract.methods.claimCredential('0x4799E074A1bdeD46eD1726b029E73669b5641C1b', ethers.utils.formatBytes32String("he is my resident")).send(
+    {
+      from: lord.address, 
+      to: '0xcB468c475254a7a9Bf3ABD8A233e47C7e604D761',
+      gas: 500000, // gasLimit
+      gasPrice: '21000000000' // 해당 값은 그대로 입력 합니다.
+    },
+  )
+  .on('receipt', (receipt)=>{
+      console.log("success");
+  })
+  .on('error', (error) => {
+      console.log("fail");
+  });
+
+}
+
+
 
   function Authout({ user }){
     return(
@@ -95,7 +131,7 @@ const Report = ({
                 <span>: {user.phone_number} </span>
                 </h3>
                 <span>
-                    <Button tag="a" color="primary" wideMobile href="#">
+                    <Button tag="a" color="primary" wideMobile href="#" onClick={() => sendTx(user.id)}>
                     세입자 받기
                     </Button>
                     <span> </span>
@@ -114,7 +150,6 @@ const Report = ({
     )
   }
 
-  
 
   function ReportList(){
     return(
