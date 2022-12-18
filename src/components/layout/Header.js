@@ -86,7 +86,6 @@ const Header = ({
             bottomDivider && 'has-bottom-divider'
           )}>
           <Logo />
-          <span>앱 이름</span>
           {!hideNav &&
             <>
               <button
@@ -116,7 +115,7 @@ const Header = ({
                       <Link to="/auth" onClick={closeMenu}>세입자 받기</Link>
                     </li>
                     <li>
-                      <Link to="/report" onClick={closeMenu}>건의 사항</Link>
+                      <Link to="/api/report/list/010-0000-0000" onClick={closeMenu}>건의 사항</Link>
                     </li>
                   </ul>
                   {!hideSignin &&

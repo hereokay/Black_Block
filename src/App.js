@@ -38,7 +38,7 @@ const App = () => {
       ref={childRef}
       children={() => (
         <Switch>   
-          <AppRoute exact path="/report" component={Report} layout={LayoutDefault} />
+          <AppRoute exact path="/api/report/list/:ownerTel" component={Report} layout={LayoutDefault} />
           <AppRoute exact path="/auth" component={Auth} layout={LayoutDefault} />
           <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
         </Switch>

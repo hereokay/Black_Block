@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import classNames from 'classnames';
 import { SectionProps } from '../utils/SectionProps';
 import Modal from '../components/elements/Modal';
+import axios from 'axios';
 
 import "./Report.css";
+import { CurrencyYenSharp } from '@mui/icons-material';
 
 const propTypes = {
   ...SectionProps.types
@@ -70,6 +72,12 @@ const Report = ({
     }
  ];
 
+  function spaceinsert(str){
+    var year = str.substr(0,4);
+    var month = str.substr(4,2);
+    var day = str.substr(6,2);
+    return("날짜 : " +year+" "+ month+ " "+day)
+  }  
 
   function Article2({ user }){
     return(
@@ -81,26 +89,37 @@ const Report = ({
                       </p>
                 </div>
                 <div className="testimonial-item-footer text-xs mt-32 mb-0 has-top-divider">
-                  <span className="testimonial-item-name text-color-high">{user.create_time}</span>
+                  <span className="testimonial-item-name text-color-high">{spaceinsert(user.createTime)}</span>
                   <span className="text-color-low"> / </span>
                   <span className="testimonial-item-link">
                     <span href="#0">{
-                      user.isAnonymous === false ? user.user_id : "****"
+                      user.anonymous === false ? user.userAddress : "****"
                     }</span>
                   </span>
                 </div>
               </div>
-            
-            
       </>
     )
   }
+
+  const {match,history} = props
+  const {ownerTel} = match.params    
+  const [data,setData] = useState([])
+useEffect(()=>{
+    axios.get(`http://3.36.144.134:8080/api/report/list/${ownerTel}`)
+    .then(res=>{
+        setData(res.data)
+        console.log(res.data[0])
+    })
+},[])
+
+
   
 
   function ReportList(){
     return(
       <div>
-        { users.map((user,index) => (<Article2 user={user} key={index} />)) }
+        { data.map((user,index) => (<Article2 user={user} key={index} />)) }
       </div>
     )
   }
@@ -115,11 +134,6 @@ const Report = ({
           <div className="hero-content">
             <div className="mt-0 mb-16 reveal-from-bottom" data-reveal-delay="200">
                 {ReportList()}
-
-                
-
-
-                
             </div>
           </div>
         </div>

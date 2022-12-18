@@ -57,26 +57,26 @@ const Report = ({
     {
        id: 1,
        home_number: '101호',
-       build_name : '청운빌딩',
+       build_name : 'IVY하우스',
        user_name : '이진중',
-       create_time : 'Sep 3, 2021',
+       create_time : 'May 5, 2022',
        phone_number : '010-0000-0000'
     },
     {
         id: 2,
-        home_number: '101호',
+        home_number: '301호',
         build_name : '청운빌딩',
-        user_name : '이진중',
-        create_time : 'Sep 3, 2021',
-        phone_number : '010-0000-0000'
+        user_name : '서민균',
+        create_time : 'Nov 2, 2022',
+        phone_number : '010-4322-4145'
      },
      {
         id: 3,
-        home_number: '101호',
-        build_name : '청운빌딩',
-        user_name : '이진중',
-        create_time : 'Sep 3, 2021',
-        phone_number : '010-0000-0000'
+        home_number: '402호',
+        build_name : '대성오피스텔',
+        user_name : '이상빈',
+        create_time : 'Sep 13, 2022',
+        phone_number : '010-2849-0243'
      },
  ];
 
